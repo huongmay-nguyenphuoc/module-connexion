@@ -6,16 +6,15 @@ session_start();
 <html lang="fr">
 
 <head>
-  <meta charset="utf-8">
-  <title>Accueil - Cryonics</title>
-  <link rel="stylesheet" href="index.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet"> 
+    <meta charset="utf-8">
+    <title>Accueil - Cryonics</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body id="bodyIndex">
     
     <header>
         <article></article>
@@ -29,13 +28,14 @@ session_start();
                 if (isset($_SESSION['id']))
                 {
                     echo  '<a href="pages/profil.php">Profil</a>';
+                    echo  '<a href="pages/logout.php">Déconnexion</a>';
                 }
             ?>
         </nav>
     </header>
 
     <main>
-        <section id="sectionIntro">
+        <section class="sectionIntro">
             <article id="articleTitle">
                 <h1>
                    Prolongez votre vie avec Cryonics.
@@ -49,28 +49,28 @@ session_start();
             </article>
 
             <article id="articleWelcome">
-            <h3>Bienvenue
-                    <?php
-                        if (!empty($_SESSION['login']))
-                        {
-                            echo '<em>'.$_SESSION['login'].'</em>';
-                        }
+                <h3>Bienvenue
+                        <?php
+                            if (!empty($_SESSION['login']))
+                            {
+                                echo '<em>'.$_SESSION['login'].'</em>';
+                            }
 
-                        else 
-                        {
-                            echo '<em>futur-e congelé-e</em>';
-                        }
-                    ?>
-            </h3>
+                            else 
+                            {
+                                echo '<em>futur-e congelé-e</em>';
+                            }
+                        ?>
+                </h3>
                 <?php 
                     if (isset($_SESSION['id']))
                     {
-                        echo "<a href='pages/profil.php'>Votre profil de congelé-e</a>";
+                        echo "<a class=\"bouton\" href='pages/profil.php'>Votre profil de congelé-e</a>";
                     }
 
-                    else 
+                    else
                     {
-                        echo "<a href=\"pages/inscription.php\">Rejoindre le Congélateur</a>";
+                        echo "<a class=\"bouton\" href=\"pages/inscription.php\">Rejoindre le Congélateur</a>";
                     }
                 ?>
             </article>
