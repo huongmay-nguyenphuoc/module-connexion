@@ -4,36 +4,35 @@ session_start();
 
 if (isset($_POST['formconnexion'])) {
 
-    if (strlen($_POST['login']) > 255 or strlen($_POST['password']) > 255) {
+    if (strlen($_POST['login']) > 255 or strlen($_POST['password']) > 255) { //vérification nb caractères
         $erreur = 'Soyez concis-e je vous prie, 255 caractères maximum par champ';
-    } else {
+    } else { //récupération infos
         $login = htmlspecialchars($_POST['login']);
         $password = htmlspecialchars($_POST['password']);
     }
 
-    if (isset($login, $password)) {
+    if (isset($login, $password)) { //connexion bdd
         try {
             $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion;charset=utf8', 'root', 'root');
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }
 
-
-        $query = 'SELECT * from utilisateurs WHERE login =? AND password=?';
+        $query = 'SELECT * from utilisateurs WHERE login =? AND password=?'; //vérification utilisateur
         $sqlcheck = $bdd->prepare($query);
         $sqlcheck->execute([$login, $password]);
         $usercheck = $sqlcheck->rowCount();
 
         if ($usercheck == 1) {
 
-            $user = $sqlcheck->fetch();
+            $user = $sqlcheck->fetch(); //création variables session
             $_SESSION['id'] = $user['id'];
             $_SESSION['login'] = $user['login'];
             $_SESSION['password'] = $user['password'];
 
-            if ($user['login'] == 'admin' and $user['password'] == 'admin') {
+            if ($user['login'] == 'admin' and $user['password'] == 'admin') { //cas admin
                 header("location: admin.php");
-            } else {
+            } else { //autres cas
                 header("location: profil.php");
             }
         } else {
@@ -45,9 +44,7 @@ if (isset($_POST['formconnexion'])) {
 
 
 
-
 <!DOCTYPE html>
-
 <html lang="fr">
 
 <head>
@@ -58,7 +55,7 @@ if (isset($_POST['formconnexion'])) {
     <title>Connexion - Cryonics</title>
 </head>
 
-<body  class="Bodypages">
+<body class="Bodypages">
 
     <header>
         <nav>
@@ -76,7 +73,6 @@ if (isset($_POST['formconnexion'])) {
         </nav>
     </header>
 
-
     <main>
 
         <section class="sectionIntro">
@@ -86,7 +82,6 @@ if (isset($_POST['formconnexion'])) {
                     Il ne reste plus qu'à entrer.
                 </h3>
             </article>
-
 
             <form action="connexion.php" method="post">
                 <div>
@@ -104,8 +99,6 @@ if (isset($_POST['formconnexion'])) {
                     <?php
                     if (isset($erreur)) {
                         echo $erreur;
-                    } elseif (isset($succes)) {
-                        echo $succes;
                     }
                     ?>
                 </div>
@@ -126,7 +119,6 @@ if (isset($_POST['formconnexion'])) {
 </body>
 
 </html>
-
 
 <?php
 $bdd = null;

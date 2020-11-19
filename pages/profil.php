@@ -1,40 +1,49 @@
 <?php
 session_start();
 
-try {
+try { //connexion bdd
     $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion;charset=utf8', 'root', 'root');
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
 }
 
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) { //form pré-rempli
     $query = 'SELECT * from utilisateurs WHERE id =?';
     $sqlcheck = $bdd->prepare($query);
     $sqlcheck->execute([$_SESSION['id']]);
     $user = $sqlcheck->fetch();
 }
 
+if (isset($_POST['formprofil']) and isset($_POST['passwordverif'])) { //si form rempli
 
-if (isset($_POST['login']) and isset($_POST['prenom']) and isset($_POST['nom']) and isset($_POST['password'])) {
-
-    if ($_POST['password'] != $_POST['passwordverif']) {
+    if ($_POST['password'] != $_POST['passwordverif']) { //vérif mdp
         $erreur = 'Le mot de passe ne correspond pas';
-    } elseif (strlen($_POST['login']) > 255 or  strlen($_POST['nom']) > 255 or strlen($_POST['prenom']) > 255 or strlen($_POST['password']) > 255) {
-        $erreur = 'Soyez concis-e, 100 caractères maximum par champ';
-    } else {
+    } else { //récup données form
         $newpseudo = htmlspecialchars($_POST['login']);
         $newprenom = htmlspecialchars($_POST['prenom']);
         $newnom = htmlspecialchars($_POST['nom']);
         $newpassword = htmlspecialchars($_POST['password']);
 
-        $query = 'UPDATE utilisateurs SET login = ?, prenom = ?, nom = ?, password = ? WHERE id = ?';
-        $insertnewdata = $bdd->prepare($query);
-        $insertnewdata->execute(array($newpseudo, $newprenom, $newnom, $newpassword, $_SESSION['id']));
-        $succes = $newpseudo . ', le changement a bien été enregistré.';
+
+        $query = 'SELECT id FROM utilisateurs WHERE login = ?;'; //vérification login existant
+        $checklogin = $bdd->prepare($query);
+        $checklogin->execute([$newpseudo]);
+        $usercheck = $checklogin->rowCount();
+        $userid = $checklogin->fetch();
+
+        if (($usercheck == 1 AND $userid == $_SESSION['id']) OR ($usercheck == 0)) { 
+
+            $query = 'UPDATE utilisateurs SET login = ?, prenom = ?, nom = ?, password = ? WHERE id = ?';
+            $insertnewdata = $bdd->prepare($query);
+            $insertnewdata->execute(array($newpseudo, $newprenom, $newnom, $newpassword, $_SESSION['id']));
+            $succes = $newpseudo . ', le changement a bien été enregistré.';
+        } else {
+            $erreur = "Cet identifiant existe déjà.";
+        }
     }
+} else {
+    $erreur = 'Remplissez tous les champs s\'il-vous-plaît.';
 }
-
-
 ?>
 
 
@@ -51,7 +60,7 @@ if (isset($_POST['login']) and isset($_POST['prenom']) and isset($_POST['nom']) 
     <title>Profil - Cryonics</title>
 </head>
 
-<body  class="Bodypages">
+<body class="Bodypages">
 
     <header>
         <nav>
@@ -80,44 +89,42 @@ if (isset($_POST['login']) and isset($_POST['prenom']) and isset($_POST['nom']) 
 
             <article>
                 <?php
-                if (isset($_SESSION['id'])) {
+                if (isset($_SESSION['id'])) { //Affichage du formulaire seulement si connecté
                     echo '<form action="profil.php" method="post">
-                <div>
-                    <label for="login">Identifiant</label>
-                    <input type="text" id="login" name="login" value="' .
-                        $user['login'] .
-                        '"</div>
+                        <div>
+                            <label for="login">Identifiant</label>
+                            <input type="text" id="login" name="login" value="' .
+                                $user['login'] .
+                                '"</div>
 
-                <div>
-                    <label for="prenom">Prénom</label>
-                    <input type="text" id="prenom" name="prenom" value="' .
-                        $user['prenom'] .
-                        '"</div>
+                        <div>
+                            <label for="prenom">Prénom</label>
+                            <input type="text" id="prenom" name="prenom" value="' .
+                                $user['prenom'] .
+                                '"</div>
 
-                <div>
-                    <label for="nom">Nom</label>
-                    <input type="text" id="nom" name="nom" value="' .
-                        $user['nom'] .
+                        <div>
+                            <label for="nom">Nom</label>
+                            <input type="text" id="nom" name="nom" value="' .
+                                $user['nom'] .
 
-                        '"</div>
+                                '"</div>
 
-                <div>
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" value="' .
-                        $user['password'] .
-                        '"</div>
+                        <div>
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" name="password" value="' .
+                                $user['password'] .
+                                '"</div>
 
-                <div>
-                    <label for="passwordverif">Confirmation du mot de passe</label>
-                    <input type="password" id="passwordverif" name="passwordverif">
-                </div>
+                        <div>
+                            <label for="passwordverif">Confirmation du mot de passe</label>
+                            <input type="password" id="passwordverif" name="passwordverif">
+                        </div>
 
-                <div>
-                    <button class="bouton" type="submit" name="formprofil">Envoyer</button>
-                </div>
-            </form>
-
-            <p></p>';
+                        <div>
+                            <button class="bouton" type="submit" name="formprofil">Envoyer</button>
+                        </div>
+                    </form>';
 
                     if (isset($erreur)) {
                         echo $erreur;

@@ -10,68 +10,59 @@ session_start();
     <title>Accueil - Cryonics</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body id="bodyIndex">
-    
-    <header>
+
+    <header> <!-- nav barre -->
         <article></article>
         <nav>
-            <a href ="https://www.alcor.org/what-is-cryonics/">Qu'est-ce que Cryonics ?</a>
+            <a href="https://www.alcor.org/what-is-cryonics/">Qu'est-ce que Cryonics ?</a>
             <a href="https://www.alcor.org/news/">Actualités</a>
             <a href="https://www.alcor.org/library/">Bibliothèque</a>
             <a href="pages/inscription.php">Inscription</a>
             <a href="pages/connexion.php">Connexion</a>
-            <?php 
-                if (isset($_SESSION['id']))
-                {
-                    echo  '<a href="pages/profil.php">Profil</a>';
-                    echo  '<a href="pages/logout.php">Déconnexion</a>';
-                }
+            <?php
+            if (isset($_SESSION['id'])) {
+                echo  '<a href="pages/profil.php">Profil</a>';
+                echo  '<a href="pages/logout.php">Déconnexion</a>';
+            }
             ?>
         </nav>
     </header>
 
     <main>
+        
         <section class="sectionIntro">
-            <article id="articleTitle">
+            <article id="articleTitle"> <!-- bloc gauche -->
                 <h1>
-                   Prolongez votre vie avec Cryonics.
+                    Prolongez votre vie avec Cryonics.
                 </h1>
-
                 <h2>
-                    Une vie ne devrait jamais prendre fin. 
+                    Une vie ne devrait jamais prendre fin.
                     Quand la médecine d'aujourd'hui abandonne,
                     Cryonics prend le relais.
                 </h2>
             </article>
 
-            <article id="articleWelcome">
+            <article id="articleWelcome"> <!-- bloc droit -->
                 <h3>Bienvenue
-                        <?php
-                            if (!empty($_SESSION['login']))
-                            {
-                                echo '<em>'.$_SESSION['login'].'</em>';
-                            }
-
-                            else 
-                            {
-                                echo '<em>futur-e congelé-e</em>';
-                            }
-                        ?>
+                    <?php
+                    if (!empty($_SESSION['login'])) {
+                        echo '<em>' . $_SESSION['login'] . '</em>';
+                    } else {
+                        echo '<em>futur-e congelé-e</em>';
+                    }
+                    ?>
                 </h3>
-                <?php 
-                    if (isset($_SESSION['id']))
-                    {
-                        echo "<a class=\"bouton\" href='pages/profil.php'>Votre profil de congelé-e</a>";
-                    }
-
-                    else
-                    {
-                        echo "<a class=\"bouton\" href=\"pages/inscription.php\">Rejoindre le Congélateur</a>";
-                    }
+                <?php
+                if (isset($_SESSION['id'])) {
+                    echo "<a class='bouton' href='pages/profil.php'>Votre profil de congelé-e</a>";
+                } else {
+                    echo "<a class='bouton' href='pages/inscription.php'>Rejoindre le Congélateur</a>";
+                }
                 ?>
             </article>
         </section>
@@ -84,12 +75,12 @@ session_start();
             </article>
 
             <article>
-                <h5>1317</h5> 
+                <h5>1317</h5>
                 <p>futur-es congelé-es</p>
             </article>
 
             <article>
-                <h5>3500</h5> 
+                <h5>3500</h5>
                 <p>congélateurs disponibles</p>
             </article>
         </section>
@@ -106,4 +97,5 @@ session_start();
     </footer>
 
 </body>
+
 </html>

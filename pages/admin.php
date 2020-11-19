@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-try {
+try { //connexion bdd
     $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion;charset=utf8', 'root', 'root');
 } catch (Exception $e) {
     die('Erreur : ' . $e->getMessage());
 }
 
-$query = "SELECT id FROM utilisateurs WHERE login='admin'";
+$query = "SELECT id FROM utilisateurs WHERE login='admin'"; //récup id admin
 $sqlcheck =  $bdd->prepare($query);
 $sqlcheck->execute();
 $admin = $sqlcheck->fetch();
@@ -26,7 +26,7 @@ $admin = $sqlcheck->fetch();
     <title>Admin - Cryonics</title>
 </head>
 
-<body  class="Bodypages">
+<body class="Bodypages">
 
     <header>
         <nav>
@@ -57,14 +57,15 @@ $admin = $sqlcheck->fetch();
 
             <article id="tableArticle">
                 <?php
-                if (isset($_SESSION['id']) and $_SESSION['id'] == $admin['id']) {
+                if (isset($_SESSION['id']) and $_SESSION['id'] == $admin['id']) { //affichage tableau pour admin
+                    
                     $queryusers = "SELECT * FROM utilisateurs";
                     $sql =  $bdd->prepare($queryusers);
                     $sql->execute();
 
                     echo '<table>';
                     $i = 0;
-                    while ($usertable = $sql->fetch(PDO::FETCH_ASSOC)) {
+                    while ($usertable = $sql->fetch(PDO::FETCH_ASSOC)) { //création dynamique tableau
                         if ($i == 0) {
                             echo '<thead>';
                             foreach ($usertable as $key => $value) {
@@ -81,7 +82,9 @@ $admin = $sqlcheck->fetch();
                         echo  '</tbody>';
                     }
                     echo '</table>';
-                } else {
+                } 
+                
+                else { // utilisateur non admin
                     echo 'Cher-chère ';
                     if (isset($_SESSION['login'])) {
                         echo  $_SESSION['login'];
@@ -95,9 +98,9 @@ $admin = $sqlcheck->fetch();
 
             </article>
         </section>
-            </main>
+    </main>
 
-            <footer>
+    <footer>
         <div>
             <p>© 2020 - Cryonics</p>
             <p>Tous droits réservés</p>
@@ -106,7 +109,7 @@ $admin = $sqlcheck->fetch();
         <a href=#>^</a>
     </footer>
 
-    </body>
+</body>
 
 </html>
 <?php

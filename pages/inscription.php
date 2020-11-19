@@ -2,15 +2,15 @@
 
 if (isset($_POST['forminscription'])) {
 
-    foreach ($_POST as $element) {
+    foreach ($_POST as $element) { //vérification nb caractères
         if (strlen($element) > 255) {
             $erreur = 'Soyez concis-e, 255 caractères maximum par champ';
         }
     }
 
-    if ($_POST['password'] != $_POST['passwordverif']) {
+    if ($_POST['password'] != $_POST['passwordverif']) { //vérification mdp
         $erreur = 'Cher-chère futur-e congelé-e, le mot de passe ne correspond pas';
-    } else {
+    } else { //récupération infos
         $login = htmlspecialchars($_POST['login']);
         $prenom = htmlspecialchars($_POST['prenom']);
         $nom = htmlspecialchars($_POST['nom']);
@@ -19,21 +19,21 @@ if (isset($_POST['forminscription'])) {
 
 
     if (isset($login, $prenom, $nom, $password)) {
-        try {
+        try { //connexion bdd
             $bdd = new PDO('mysql:host=localhost;dbname=moduleconnexion;charset=utf8', 'root', 'root');
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }
 
 
-        $query = 'SELECT login from utilisateurs WHERE login =?';
+        $query = 'SELECT login from utilisateurs WHERE login =?'; //vérification login existant
         $sqlcheck = $bdd->prepare($query);
         $sqlcheck->execute([$login]);
         $res = $sqlcheck->fetch();
 
         if ($res) {
             $erreur = "Cet identifiant existe déjà.";
-        } else {
+        } else { //envoi données bdd
             $query = 'INSERT INTO utilisateurs (login, prenom, nom, password) VALUES (?,?,?,?)';
             $sql = $bdd->prepare($query);
             $sql->execute(array($login, $prenom, $nom, $password));
@@ -59,6 +59,7 @@ if (isset($_POST['forminscription'])) {
 </head>
 
 <body class="Bodypages">
+
     <header>
         <nav>
             <a href="../index.php">Accueil</a>
@@ -114,8 +115,7 @@ if (isset($_POST['forminscription'])) {
 
                 <div>
                     <button class="bouton" type="submit" name="forminscription">Ouvrir la porte</button>
-
-                    <p class='notice'>Si le formulaire est valide, vous serez immédiatement redirigé-e vers la page de connexion.</p>
+                    <p class="notice">Si le formulaire est valide, vous serez immédiatement redirigé-e vers la page de connexion.</p>
                 </div>
             </form>
 

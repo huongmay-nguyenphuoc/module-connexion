@@ -1,78 +1,92 @@
-            .sectionIntro {
-            background: url(../images/glacons.jpg) no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            flex-direction: row;
-            box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .sectionIntro article {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: justify;
-            padding: 20px;
-        }
-        
-        #articleTitle h1 {
-            font-size: 2.5vw;
-        }
-        
-        #articleTitle h2 {
-            font-size: 2vw;
-        }
-        
-        #articleWelcome {
-            font-size: 2vw;
-            color: white;
-        }
-        
-        #articleWelcome h3 {
-            width: 50%;
-            padding: 20px;
-            text-shadow: 5px 5px 10px rgba(200, 229, 240, 0.8);
-        }
-        
-        .bouton {
-            width: 50%;
-            height: 10%;
-        }
-        /* SECTION FILLER */
-        
-        #sectionFiller {
-            height: 80vh;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            background-color: #F9FAFA;
-        }
-        
-        #sectionFiller article {
-            font-size: 2.5vw;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        #sectionFiller article h5 {
-            font-size: 4vw;
-        }
-        
-        #bodyIndex {
-            min-height: 100vh;
-        }
-        
-        @media only screen and (max-width: 600px) {
-            body {
-                font-size: 100%;
-            }
-            #articleTitle h1,
-            #articleTitle h2,
-            #articleWelcome {
-                font-size: 1em;
-            }
+/* BODY */
+
+#bodyIndex {
+    min-height: 100vh;
+}
+
+
+/* SECTION INTRO */
+
+.sectionIntro {
+    background: url(../images/glacons.jpg) no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.3);
+    flex-direction: row;
+}
+
+.sectionIntro article {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+    padding: 20px;
+}
+
+#articleTitle h1 {
+    font-size: 2.5vw;
+}
+
+#articleTitle h2,
+#articleWelcome {
+    font-size: 2vw;
+}
+
+#articleWelcome {
+    color: white;
+}
+
+#articleWelcome h3 {
+    width: 50%;
+    padding: 20px;
+    text-shadow: 5px 5px 10px rgba(200, 229, 240, 0.8);
+}
+
+.bouton {
+    width: 50%;
+    height: 10%;
+}
+
+
+/* SECTION FILLER */
+
+#sectionFiller {
+    background-color: #F9FAFA;
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#sectionFiller article {
+    font-size: 2.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sectionFiller article h5 {
+    font-size: 4vw;
+}
+
+
+/* RESPONSIVE */
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 100%;
+    }
+    #articleTitle h1,
+    #articleTitle h2,
+    #articleWelcome {
+        font-size: 1em;
+    }
+    #sectionFiller {
+        flex-direction: column;
+    }
+}
