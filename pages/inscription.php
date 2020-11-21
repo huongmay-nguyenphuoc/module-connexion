@@ -66,11 +66,12 @@ if (isset($_POST['forminscription'])) {
             <a href="https://www.alcor.org/what-is-cryonics/">Qu'est-ce que Cryonics ?</a>
             <a href="https://www.alcor.org/news/">Actualités</a>
             <a href="https://www.alcor.org/library/">Bibliothèque</a>
-            <a href="connexion.php">Connexion</a>
             <?php
-            if (isset($_SESSION['id'])) {
-                echo  '<a href="profil.php">Profil</a>';
-                echo  '<a href="logout.php">Déconnexion</a>';
+            if (!isset($_SESSION['id'])){
+            echo '<a href="connexion.php">Connexion</a>';
+            } else {
+                echo  '<a href="profil.php">Profil</a>
+                <a href="logout.php">Déconnexion</a>';
             }
             ?>
         </nav>

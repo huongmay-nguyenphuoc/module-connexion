@@ -22,12 +22,13 @@ session_start();
             <a href="https://www.alcor.org/what-is-cryonics/">Qu'est-ce que Cryonics ?</a>
             <a href="https://www.alcor.org/news/">Actualités</a>
             <a href="https://www.alcor.org/library/">Bibliothèque</a>
-            <a href="pages/inscription.php">Inscription</a>
-            <a href="pages/connexion.php">Connexion</a>
-            <?php
-            if (isset($_SESSION['id'])) {
-                echo  '<a href="pages/profil.php">Profil</a>';
-                echo  '<a href="pages/logout.php">Déconnexion</a>';
+            <?php 
+            if (!isset($_SESSION['id'])) {
+                echo '<a href="inscription.php">Inscription</a>
+                <a href="connexion.php">Connexion</a>';
+            } else {
+                echo  '<a href="pages/profil.php">Profil</a>
+                <a href="pages/logout.php">Déconnexion</a>';
             }
             ?>
         </nav>
