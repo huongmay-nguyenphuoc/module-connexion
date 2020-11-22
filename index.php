@@ -24,8 +24,8 @@ session_start();
             <a href="https://www.alcor.org/library/">Bibliothèque</a>
             <?php 
             if (!isset($_SESSION['id'])) {
-                echo '<a href="inscription.php">Inscription</a>
-                <a href="connexion.php">Connexion</a>';
+                echo '<a href="pages/inscription.php">Inscription</a>
+                <a href="pages/connexion.php">Connexion</a>';
             } else {
                 echo  '<a href="pages/profil.php">Profil</a>
                 <a href="pages/logout.php">Déconnexion</a>';
